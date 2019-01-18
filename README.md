@@ -1,5 +1,3 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Project Requirements
 - Create an application that allows you to use the Google Books API to search for books
   - Type in a query and display a list of books matching that query.
@@ -11,6 +9,30 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Handle edge cases
 - Usability 
 - Internal Quality (decoupling, texting, readability)
+- Responsive App
+- Error Handling
+  - When making a query => If success, renders book list. If error, renders error component with error message.
+- Edge Cases
+  - If query returns no results, component tells user there are no results instead of a blank screen.
+- Test Units
+  - User input is saved properly into component state
+  - Input is correctly passed from state into API call
+  - Rendering Test Units
+    - App loads
+    - On query success, renders book list or "no books match your query" component when there are no results
+    - On query error, renders error component with correct error message
+- Proper README
+
+## Getting Started
+Navigate to the google-books-api repo on your local machine:
+```
+git clone https://github.com/serpient/google-books-api.git
+git remote add upstream https://github.com/serpient/google-books-api.git
+npm install
+npm start
+```
+## Techstack
+This app was built with [Create React App](https://github.com/facebook/create-react-app), SASS (style pre-processor) and Jest/Enzyme (testing library). 
 
 ## Available Scripts
 
