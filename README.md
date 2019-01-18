@@ -14,6 +14,8 @@
   - When making a query => If success, renders book list. If error, renders error component with error message.
 - Edge Cases
   - If query returns no results, component tells user there are no results instead of a blank screen.
+  - Only start a query when input is not an empty string
+  - clearing query in input box after API call will remove query results ( blank slate )
 - Test Units
   - User input is saved properly into component state
   - Input is correctly passed from state into API call
