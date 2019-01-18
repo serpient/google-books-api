@@ -8,7 +8,7 @@ class App extends Component {
     this.state = {
       input: '',
       loading: false,
-      error: false,
+      error: '',
       results: [],
     }
   }
@@ -18,8 +18,14 @@ class App extends Component {
     this.setState({ [name]: value }, () => {
       if (this.state.input !== '') {
         this.queryAPI();
+      } else {
+        this.clearApp();
       }
     });
+  }
+
+  clearApp = () => {
+    this.setState({ error: false, results: [] });
   }
 
   queryAPI = () => {
@@ -27,14 +33,14 @@ class App extends Component {
 
     axios.get('https://www.googleapis.com/books/v1/volumes', {
       params: {
+        key: 'AIzaSyCLJvxg85jgfaMwaORDzP9ECY83JCLXQtU',
         q: input,
         orderBy: 'relevance',
         maxResults: 30,
-        fields: 'kind'
+        fields: 'items(volumeInfo(title,authors,imageLinks/thumbnail,infoLink,publisher))' 
       }
     })
     .then((res) => {
-      console.log(res.data);
       let { items, totalItems } = res.data;
       totalItems > 0 ? this.setState({ results: items }) : this.setState({ results: [] });
     })
