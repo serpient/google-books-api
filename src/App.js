@@ -8,7 +8,7 @@ class App extends Component {
     this.state = {
       input: '',
       loading: false,
-      error: '',
+      error: false,
       results: [],
     }
   }
@@ -64,7 +64,7 @@ class App extends Component {
           placeholder='Search by book title or author...'
           onChange={(e) => {this.handleUserInput(e)}} 
         />
-        { error }
+        { error && <div className='error-message'>{error}</div> }
       </div>
     );
   }
