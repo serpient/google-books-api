@@ -66,7 +66,7 @@ class App extends Component {
   }
 
   clearApp = () => {
-    this.setState({ error: false, results: [] });
+    this.setState({ input: '', error: false, results: [] });
   }
 
   queryAPI = () => {
@@ -104,6 +104,7 @@ class App extends Component {
 
   render() {
     let { input, results, error, loading } = this.state;
+    console.log(input);
     return (
       <div className="App">
         <h1 className='App-Title'>Let's Find Some Books!</h1>
