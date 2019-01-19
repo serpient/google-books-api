@@ -6,14 +6,14 @@ const BookCards = ({ volumeInfo }) => {
   let { title, authors, imageLinks, infoLink, publisher } = volumeInfo;
   let thumbnailImg = imageLinks ? imageLinks.thumbnail : require('./assets/book_placeholder.png');
   let publisherText = publisher ? publisher : 'No publisher found';
-  let authorText = authors.length === 1 ? authors[0] : authors.join(', ');
+  let authorText = authors && authors.length === 1 ? authors[0] : 'No authors found';
 
   return (
     <div className='book-card--container'>
       <img className='book-card--img' alt='book' src={thumbnailImg} />
       <div className='book-card--info'>
         <h2 className='book-card--title'>{title}</h2>
-        <h3 className='book-card--subtext'>{authorText}</h3>
+        <h3 className='book-card--subtext'>{`By: ${authorText}`}</h3>
         <h3 className='book-card--subtext'>{`Published By: ${publisherText}`}</h3>
       </div>
       <a 
@@ -43,6 +43,7 @@ class App extends Component {
     let { value, name } = e.currentTarget;
     this.setState({ [name]: value }, () => {
       if (this.state.input !== '') {
+        this.setState({ loading: true, results: [] });
         this.queryAPI();
       } else {
         this.clearApp();
@@ -62,13 +63,17 @@ class App extends Component {
         key: 'AIzaSyCLJvxg85jgfaMwaORDzP9ECY83JCLXQtU',
         q: input,
         orderBy: 'relevance',
-        maxResults: 2,
+        maxResults: 20,
         fields: 'totalItems,items(volumeInfo(title,authors,imageLinks/thumbnail,infoLink,publisher))' 
       }
     })
     .then((res) => {
       let { data: { items, totalItems } } = res;
-      totalItems > 0 ? this.setState({ results: items }) : this.setState({ results: [] });
+      let result = totalItems > 0 ? items : [];
+      setTimeout(() => {
+        this.setState({ loading: false, results: result });
+      }, 1000)
+      
     })
     .catch((err) => {
       console.error(err);
@@ -84,7 +89,7 @@ class App extends Component {
   }
 
   render() {
-    let { input, results, error } = this.state;
+    let { input, results, error, loading } = this.state;
     return (
       <div className="App">
         <h1 className='App-Title'>Let's Find Some Books!</h1>
@@ -97,6 +102,9 @@ class App extends Component {
           onChange={(e) => {this.handleUserInput(e)}} 
         />
         { error && <div className='error-message'>{error}</div> }
+        {
+          loading && <div id='loader'><i className='fas fa-spinner'></i></div>
+        }
         <section className='book-results'>
           {results.length > 0 ? this.renderCards(results) : null}
         </section>

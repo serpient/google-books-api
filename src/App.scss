@@ -1,14 +1,17 @@
+@import './shared';
+
 .App {
   text-align: center;
 }
 
-.loader {
-  animation: App-logo-spin infinite 20s linear;
-  width: 50px;
-  height: 50px;
-  background-color: white;
-  border: green;
+#loader {
+  animation: App-logo-spin infinite 1s linear;
+  font-size: 60px;
+  color: $grey;
+  display: block;
+  margin: 30px auto;
 }
+
 
 
 @keyframes App-logo-spin {
