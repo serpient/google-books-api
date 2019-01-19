@@ -40,7 +40,6 @@ class App extends Component {
   }
 
   handleSubmitQuery = (e) => {
-    console.log('trigger')
     if (this.state.input !== '') {
       this.setState({ loading: true, results: [] });
       this.queryAPI();
@@ -104,7 +103,6 @@ class App extends Component {
 
   render() {
     let { input, results, error, loading } = this.state;
-    console.log(input);
     return (
       <div className="App">
         <h1 className='App-Title'>Let's Find Some Books!</h1>
