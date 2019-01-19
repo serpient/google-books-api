@@ -105,7 +105,7 @@ class App extends Component {
     let { input, results, error, loading } = this.state;
     return (
       <div className="App">
-        <h1 className='App-Title'>Let's Find Some Books!</h1>
+        <h1 className='app-title'>Book Finder</h1>
         <input 
           id='query-input'
           type='search' 
@@ -122,7 +122,7 @@ class App extends Component {
         >
           Search
         </button>
-        { error && <div className='error-message'>{error}</div> }
+        { error && <div className='error-message'>Error: {error}</div> }
         {
           loading && <div id='loader'><i className='fas fa-spinner'></i></div>
         }
