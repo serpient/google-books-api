@@ -16,7 +16,14 @@ const BookCards = ({ volumeInfo }) => {
         <h3 className='book-card--subtext'>{stringAuthor}</h3>
         <h3 className='book-card--subtext'>{`Published By: ${publisherText}`}</h3>
       </div>
-      <a href={infoLink} _target='blank' className='book-card--link'>See this Book</a>
+      <a 
+        href={infoLink} 
+        target='_blank' 
+        rel="noopener noreferrer" 
+        className='book-card--link'
+      >
+        See this Book
+      </a>
     </div>
   )
 }
