@@ -109,7 +109,7 @@ BOOK CARDS
   height: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 2fr 1fr;
+  grid-template-rows: 3fr 1fr;
   text-align: left;
 }
 
@@ -127,6 +127,7 @@ BOOK CARDS
 }
 .book-card--btn {
   align-content: end;
+  margin-top: 20px;
 }
 
 .book-card--link {
@@ -138,11 +139,12 @@ BOOK CARDS
   text-align: center;
   text-decoration: none;
 }
-
+/*
+==========================
+NO RESULTS
+==========================
+*/
 .no-results-card {
-  // background-color: white;
-  // color: $grey;
-  // box-shadow: $box-shadow;
   color: $grey;
   width: 70%;
   margin: 0 auto;
