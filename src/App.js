@@ -3,18 +3,18 @@ import axios from 'axios';
 import './App.scss';
 
 const BookCards = ({ volumeInfo }) => {
-  if (!volumeInfo) { return null }
   let { title, authors, imageLinks, infoLink, publisher } = volumeInfo;
-  let { thumbnail } = imageLinks;
-  console.log({ title, authors, thumbnail, infoLink, publisher });
+  let thumbnailImg = imageLinks ? imageLinks.thumbnail : require('./assets/book_placeholder.png');
+  let publisherText = publisher ? publisher : 'No publisher found';
   let stringAuthor = authors.length === 1 ? authors[0] : authors.join(', ');
+
   return (
     <div className='book-card--container'>
-      <img className='book-card--img' alt='book' src={thumbnail} />
+      <img className='book-card--img' alt='book' src={thumbnailImg} />
       <div className='book-card--info'>
         <h2 className='book-card--title'>{title}</h2>
         <h3 className='book-card--subtext'>{stringAuthor}</h3>
-        <h3 className='book-card--subtext'>{publisher}</h3>
+        <h3 className='book-card--subtext'>{`Published By: ${publisherText}`}</h3>
       </div>
       <a href={infoLink} _target='blank' className='book-card--link'>See this Book</a>
     </div>
@@ -70,17 +70,14 @@ class App extends Component {
     })
   }
 
-  renderCards = () => {
-    let { results } = this.state;
-    return results.map((volumeInfo,idx) => {
+  renderCards = (resultsArray) => {
+    return resultsArray.map((volumeInfo,idx) => {
       return <BookCards volumeInfo={volumeInfo.volumeInfo} key={idx} />
     })
   }
-  
+
   render() {
     let { input, results, error } = this.state;
-    let bookCards = results.length > 0 ? null : this.renderCards();
-    console.log(results.length);
     return (
       <div className="App">
         <h1 className='App-Title'>Let's Find Some Books!</h1>
@@ -94,7 +91,7 @@ class App extends Component {
         />
         { error && <div className='error-message'>{error}</div> }
         <section className='book-results'>
-          {bookCards}
+          {results.length > 0 ? this.renderCards(results) : null}
         </section>
       </div>
     );
