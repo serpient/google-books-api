@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import { shallow, mount } from 'enzyme';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
@@ -9,7 +10,12 @@ it('renders without crashing', () => {
 });
 
 it('saves user input correctly in state', () => {
-  const input = document.getElementById('query-input');
+  const wrapper = mount(<App />);
+  const input = wrapper.find('#query-input');
+  input.instance().value = 'test';
+  input.instance().name = 'input';
+  input.simulate('change');
+  expect(wrapper.state().input).toEqual('test')
 })
 
 it('makes query with correct user input', () => {
