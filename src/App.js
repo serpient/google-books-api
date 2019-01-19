@@ -39,16 +39,30 @@ class App extends Component {
     }
   }
 
+  handleSubmitQuery = (e) => {
+    console.log('trigger')
+    if (this.state.input !== '') {
+      this.setState({ loading: true, results: [] });
+      this.queryAPI();
+    } else {
+      this.setState({ error: 'Please provide a search query first' })
+    }
+  }
+
   handleUserInput = (e) => {
+    e.preventDefault();
     let { value, name } = e.currentTarget;
-    this.setState({ [name]: value }, () => {
-      if (this.state.input !== '') {
-        this.setState({ loading: true, results: [] });
-        this.queryAPI();
-      } else {
-        this.clearApp();
-      }
-    });
+    if (value === '') {
+      this.clearApp();
+    } else {
+      this.setState({ [name]: value, error: false });
+    }
+  }
+
+  handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.handleSubmitQuery();
+    } 
   }
 
   clearApp = () => {
@@ -72,7 +86,7 @@ class App extends Component {
       let result = totalItems > 0 ? items : [];
       setTimeout(() => {
         this.setState({ loading: false, results: result });
-      }, 1000)
+      }, 200)
       
     })
     .catch((err) => {
@@ -100,7 +114,15 @@ class App extends Component {
           value={input} 
           placeholder='Search by book title or author...'
           onChange={(e) => {this.handleUserInput(e)}} 
+          onKeyDown={(e) => { this.handleKeyPress(e)}}
         />
+        <button 
+          className='query-btn'
+          type='button'  
+          onClick={(e) => {this.handleSubmitQuery(e)}} 
+        >
+          Search
+        </button>
         { error && <div className='error-message'>{error}</div> }
         {
           loading && <div id='loader'><i className='fas fa-spinner'></i></div>
