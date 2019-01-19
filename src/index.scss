@@ -1,3 +1,5 @@
+@import './shared';
+
 body {
   margin: 0;
   padding: 0;
@@ -6,6 +8,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: $palest-grey;
+  min-height: 100vh;
+  top: 0px;
+  width: 100vw;
 }
 
 code {

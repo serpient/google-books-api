@@ -6,11 +6,6 @@ APP & TITLE
 */
 
 .App {
-  background-color: $palest-grey;
-  min-height: 100vh;
-  top: 0px;
-  position: absolute;
-  width: 100vw;
   text-align: center;
   max-width: 1180px;
   margin: 0 auto;
@@ -74,10 +69,32 @@ LOADER
     transform: rotate(360deg);
   }
 }
-
-
+/*
+==========================
+BOOK CARD CONTAINER
+==========================
+*/
+.book-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+  grid-gap: 20px;
+  margin: 0 auto;
+}
 /*
 ==========================
 BOOK CARDS
 ==========================
 */
+.book-card--container {
+  background-color: white;
+  box-shadow: $box-shadow;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.book-card--img {
+  width: 150px;
+  height: 200px;
+  object-fit: cover;
+  box-shadow: $box-shadow;
+}
