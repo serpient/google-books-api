@@ -24,7 +24,7 @@ INPUT & INPUT BTN & ERROR
 ==========================
 */
 #query-input {
-  width: 650px;
+  width: 50vw;
   padding: 8px;
   border: none;
   box-shadow: $box-shadow;
@@ -137,4 +137,22 @@ BOOK CARDS
   border-radius: 10px;
   text-align: center;
   text-decoration: none;
+}
+
+.no-results-card {
+  // background-color: white;
+  // color: $grey;
+  // box-shadow: $box-shadow;
+  color: $grey;
+  width: 70%;
+  margin: 0 auto;
+  grid-column: 1 / -1;
+  padding: 10px;
+  line-height: 30px;
+  font-weight: 600;
+  font-size: 22px;
+  i {
+    margin-right: 20px;
+    font-size: 22px;
+  }
 }

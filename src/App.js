@@ -32,14 +32,21 @@ const BookCards = ({ volumeInfo }) => {
   )
 }
 
+const NoResults = ({text}) => (
+  <div className='no-results-card'><i className='far fa-frown'/>{text}</div>
+)
+
 class App extends Component {
   constructor(props) {
     super(props);
+    this.starterText = 'Nothing Here Yet - Try Searching For A Book!';
+    this.nothingFoundText = 'Nothing Found! Try Another Query.';
     this.state = {
       input: '',
       loading: false,
       error: false,
       results: [],
+      noResultsText: this.starterText,
     }
   }
 
@@ -88,7 +95,7 @@ class App extends Component {
       let { data: { items, totalItems } } = res;
       let result = totalItems > 0 ? items : [];
       setTimeout(() => {
-        this.setState({ loading: false, results: result });
+        this.setState({ loading: false, results: result, noResultsText: this.nothingFoundText });
       }, 200)
       
     })
@@ -106,7 +113,7 @@ class App extends Component {
   }
 
   render() {
-    let { input, results, error, loading } = this.state;
+    let { input, results, error, loading, noResultsText } = this.state;
     return (
       <div className="App">
         <h1 className='app-title'>Book Finder</h1>
@@ -131,7 +138,7 @@ class App extends Component {
           loading && <div id='loader'><i className='fas fa-spinner'></i></div>
         }
         <section className='book-results'>
-          {results.length > 0 ? this.renderCards(results) : null}
+          {results.length > 0 ? this.renderCards(results) : <NoResults text={noResultsText} />}
         </section>
       </div>
     );
