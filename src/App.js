@@ -89,7 +89,7 @@ class App extends Component {
       <div className="App">
         <h1 className='App-Title'>Let's Find Some Books!</h1>
         <input 
-          className='query-input' 
+          id='query-input'
           type='search' 
           name='input' 
           value={input} 
