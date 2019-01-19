@@ -11,7 +11,8 @@ body {
   background-color: $palest-grey;
   min-height: 100vh;
   top: 0px;
-  width: 100vw;
+  max-width: 100vw;
+  box-sizing: content-box;
 }
 
 code {
