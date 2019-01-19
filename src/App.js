@@ -11,19 +11,23 @@ const BookCards = ({ volumeInfo }) => {
   return (
     <div className='book-card--container'>
       <img className='book-card--img' alt='book' src={thumbnailImg} />
-      <div className='book-card--info'>
-        <h2 className='book-card--title'>{title}</h2>
-        <h3 className='book-card--subtext'>{`By: ${authorText}`}</h3>
-        <h3 className='book-card--subtext'>{`Published By: ${publisherText}`}</h3>
+      <div className='book-card--info--container'>
+        <div className='book-card--info'>
+          <h2 className='book-card--title'>{title}</h2>
+          <h3 className='book-card--subtext'>{`By: ${authorText}`}</h3>
+          <h3 className='book-card--subtext'>{`Published By: ${publisherText}`}</h3>
+        </div>
+        <div className='book-card--btn'>
+          <a 
+            href={infoLink} 
+            target='_blank' 
+            rel="noopener noreferrer" 
+            className='book-card--link'
+          >
+            See this Book
+          </a>
+        </div>
       </div>
-      <a 
-        href={infoLink} 
-        target='_blank' 
-        rel="noopener noreferrer" 
-        className='book-card--link'
-      >
-        See this Book
-      </a>
     </div>
   )
 }
