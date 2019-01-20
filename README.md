@@ -1,3 +1,6 @@
+![gif](http://g.recordit.co/HzvDCcOXoD.gif)
+# Google Books API Project for 8th Light
+
 ## Project Requirements
 - Create an application that allows you to use the Google Books API to search for books
   - Type in a query and display a list of books matching that query.
