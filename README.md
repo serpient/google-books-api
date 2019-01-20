@@ -34,7 +34,7 @@ npm install
 npm start
 ```
 ## Techstack
-This app was built with [Create React App](https://github.com/facebook/create-react-app), SASS (style pre-processor) and Jest/Enzyme (testing library). 
+This app was built with [Create React App](https://github.com/facebook/create-react-app), SASS (style pre-processor), Jest/Enzyme (testing library), and axios (making API calls).
 
 ## Available Scripts
 
