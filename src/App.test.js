@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import { BookCards } from './App';
 import { shallow, mount } from 'enzyme';
 import axios from 'axios';
 
@@ -27,54 +28,60 @@ describe('api calls', () => {
   const mockItems = mockResults.data.items;
   const mockError = { error: 500, response: { data: { error: { message: 'Test Error' }}}};
   beforeEach(() => { 
-    renderedComponent = shallow(<App />);
+    renderedComponent = mount(<App />);
   })
   it('resets results before querying for new data', () => {
-    axios.get.mockResolvedValue(mockResults);
+    axios.get.mockResolvedValueOnce(mockResults);
     renderedComponent.setState({ input: 'test', results: mockItems });
     renderedComponent.instance().handleSubmitQuery();
     expect(renderedComponent.state('results')).toEqual([])
   })
   
   it('with empty input, will not query for new data', () => {
-    axios.get.mockResolvedValue(mockResults);
+    axios.get.mockResolvedValueOnce(mockResults);
     renderedComponent.setState({ input: '', results: mockItems });
     renderedComponent.instance().handleSubmitQuery();
     expect(renderedComponent.state('results')).toEqual(mockItems)
     expect(renderedComponent.state('error')).toEqual('Please provide a search query first')
   })
-  
+
   it('saves results to state after making successful query', () => {
-    axios.get.mockResolvedValue(mockResults);
+    axios.get.mockResolvedValueOnce(mockResults);
     renderedComponent.instance().queryAPI('test').then(res => {
       expect(res).toEqual(mockResults);
       expect(renderedComponent.state('results')).toEqual(mockResults.data.items);
+      expect(renderedComponent.state('error')).toEqual(false);
     });
   })
 
   it('sets error after failed query', () => {
-    axios.get.mockRejectedValue(mockError);
+    axios.get.mockRejectedValueOnce(mockError);
     renderedComponent.instance().queryAPI('test')
       .catch(err => {
         expect(err).toEqual(mockError);
+        expect(renderedComponent.state('results')).toEqual([]);
         expect(renderedComponent.state('error')).toEqual(mockError.response.data.error.message);
       })
   })
-})
 
-it('renders book cards when results is not empty', () => {
-  
-})
+  it('renders no book cards when results not empty', () => {
+    renderedComponent.setState({ results: [] });
+    renderedComponent.update();
+    expect(renderedComponent.find(BookCards).length).toEqual(0);
+  })
 
-it('renders correct number of book cards to match results content', () => {
-  
-})
+  it('renders book cards when results is not empty', () => {
+    renderedComponent.setState({ results: mockItems });
+    renderedComponent.update();
+    expect(renderedComponent.find(BookCards).length).toEqual(1);
+  })
 
-it('clearApp will remove book components and set error to false', () => {
-  
-})
+  it('clearApp will remove book components and set error to false', () => {
+    renderedComponent.setState({ results: mockItems });
+    renderedComponent.update();
+    renderedComponent.instance().clearApp();
+    expect(renderedComponent.state('results')).toEqual([]);
+    expect(renderedComponent.state('error')).toEqual(false);
+  })
 
-
-it('after query, error will clear results', () => {
-  
 })
