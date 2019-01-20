@@ -80,7 +80,7 @@ class App extends Component {
   }
 
   queryAPI = (input) => {
-    axios.get('https://www.googleapis.com/books/v1/volumes', {
+    return axios.get('https://www.googleapis.com/books/v1/volumes', {
       params: {
         key: 'AIzaSyCLJvxg85jgfaMwaORDzP9ECY83JCLXQtU',
         q: input,
@@ -92,15 +92,14 @@ class App extends Component {
     .then((res) => {
       let { data: { items, totalItems } } = res;
       let result = totalItems > 0 ? items : [];
-      setTimeout(() => {
-        this.setState({ loading: false, results: result, noResultsText: this.nothingFoundText });
-      }, 200)
-      
+      this.setState({ loading: false, results: result, noResultsText: this.nothingFoundText });
+      return res;
     })
     .catch((err) => {
       console.error(err);
       let { message } = err.response.data.error;
       this.setState({ error: message })
+      return err;
     })
   }
 
