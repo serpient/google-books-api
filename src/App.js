@@ -53,7 +53,7 @@ class App extends Component {
   handleSubmitQuery = (e) => {
     if (this.state.input !== '') {
       this.setState({ loading: true, results: [] });
-      this.queryAPI();
+      this.queryAPI(this.state.input);
     } else {
       this.setState({ error: 'Please provide a search query first' })
     }
@@ -79,9 +79,7 @@ class App extends Component {
     this.setState({ input: '', error: false, results: [] });
   }
 
-  queryAPI = () => {
-    let { input } = this.state;
-
+  queryAPI = (input) => {
     axios.get('https://www.googleapis.com/books/v1/volumes', {
       params: {
         key: 'AIzaSyCLJvxg85jgfaMwaORDzP9ECY83JCLXQtU',
@@ -124,7 +122,7 @@ class App extends Component {
           value={input} 
           placeholder='Search by book title or author...'
           onChange={(e) => {this.handleUserInput(e)}} 
-          onKeyDown={(e) => { this.handleKeyPress(e)}}
+          onKeyDown={(e) => {this.handleKeyPress(e)}}
         />
         <button 
           className='query-btn'
@@ -138,7 +136,8 @@ class App extends Component {
           loading && <div id='loader'><i className='fas fa-spinner'></i></div>
         }
         <section className='book-results'>
-          {results.length > 0 ? this.renderCards(results) : <NoResults text={noResultsText} />}
+          {results.length > 0 && this.renderCards(results)}
+          {results.length === 0 && !loading && <NoResults text={noResultsText} />}
         </section>
       </div>
     );
