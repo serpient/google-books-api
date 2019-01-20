@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './App.scss';
 
-const BookCards = ({ volumeInfo }) => {
+export const BookCards = ({ volumeInfo }) => {
   const { title, authors, imageLinks, infoLink, publisher } = volumeInfo;
   let thumbnailImg = imageLinks ? imageLinks.thumbnail : require('./assets/book_placeholder.png');
   let publisherText = publisher ? publisher : 'No publisher found';
