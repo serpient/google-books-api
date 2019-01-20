@@ -21,33 +21,29 @@ it('saves user input correctly in state', () => {
   expect(wrapper.state().input).toEqual('test')
 })
 
-describe('before API calls, inputis checked and state is reset', () => {
-  let renderedComponent;
-  const mockResults = { totalItems: 1, items: [{ volumeInfo: { title: 'test' }}]};
-  beforeEach(() => { 
-    renderedComponent = shallow(<App />);
-  })
-  // it('resets results before querying for new data', () => {
-  //   renderedComponent.setState({ input: 'test', results: mockResults.items });
-  //   renderedComponent.instance().handleSubmitQuery();
-  //   expect(renderedComponent.state('results')).toEqual([])
-  // })
-  
-  it('with empty input, will not query for new data', () => {
-    renderedComponent.setState({ input: '', results: mockResults.items });
-    renderedComponent.instance().handleSubmitQuery();
-    expect(renderedComponent.state('results')).toEqual(mockResults.items)
-    expect(renderedComponent.state('error')).toEqual('Please provide a search query first')
-  })
-})
-
 describe('api calls', () => {
   let renderedComponent;
   const mockResults = { status: 200, data: { totalItems: 1, items: [{ volumeInfo: { title: 'test' } }] }} 
+  const mockItems = mockResults.data.items;
   const mockError = { error: 500, response: { data: { error: { message: 'Test Error' }}}};
   beforeEach(() => { 
     renderedComponent = shallow(<App />);
   })
+  it('resets results before querying for new data', () => {
+    axios.get.mockResolvedValue(mockResults);
+    renderedComponent.setState({ input: 'test', results: mockItems });
+    renderedComponent.instance().handleSubmitQuery();
+    expect(renderedComponent.state('results')).toEqual([])
+  })
+  
+  it('with empty input, will not query for new data', () => {
+    axios.get.mockResolvedValue(mockResults);
+    renderedComponent.setState({ input: '', results: mockItems });
+    renderedComponent.instance().handleSubmitQuery();
+    expect(renderedComponent.state('results')).toEqual(mockItems)
+    expect(renderedComponent.state('error')).toEqual('Please provide a search query first')
+  })
+  
   it('saves results to state after making successful query', () => {
     axios.get.mockResolvedValue(mockResults);
     renderedComponent.instance().queryAPI('test').then(res => {
@@ -55,6 +51,7 @@ describe('api calls', () => {
       expect(renderedComponent.state('results')).toEqual(mockResults.data.items);
     });
   })
+
   it('sets error after failed query', () => {
     axios.get.mockRejectedValue(mockError);
     renderedComponent.instance().queryAPI('test')
