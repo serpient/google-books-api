@@ -3,7 +3,7 @@ import axios from 'axios';
 import './App.scss';
 
 const BookCards = ({ volumeInfo }) => {
-  let { title, authors, imageLinks, infoLink, publisher } = volumeInfo;
+  const { title, authors, imageLinks, infoLink, publisher } = volumeInfo;
   let thumbnailImg = imageLinks ? imageLinks.thumbnail : require('./assets/book_placeholder.png');
   let publisherText = publisher ? publisher : 'No publisher found';
   let authorText = authors && authors.length === 1 ? authors[0] : 'No authors found';
