@@ -30,7 +30,7 @@ class App extends Component {
   }
 
   handleError = (err) => {
-    this.setState({ error: err })
+    this.setState({ error: err, loading: false })
   }
 
   handleSuccess = (result) => {
