@@ -1,0 +1,22 @@
+@import '../shared';
+/*
+==========================
+LOADER
+==========================
+*/
+#loader {
+  animation: App-logo-spin infinite 1s linear;
+  font-size: 60px;
+  color: $grey;
+  display: block;
+  margin: 30px auto;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
