@@ -23,10 +23,7 @@ class App extends Component {
   handleSubmitQuery = (input) => {
     if (input !== '') {
       this.setState({ loading: true, results: [] });
-      const query = new Promise((resolve, reject) => {
-        queryAPI(input, this.handleSuccess, this.handleError);
-      })
-      return query;
+      return queryAPI(input, this.handleSuccess, this.handleError);
     } else {
       this.setState({ error: 'Please provide a search query first' })
     }
