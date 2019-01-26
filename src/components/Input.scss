@@ -1,0 +1,49 @@
+@import '../shared';
+
+/*
+==========================
+INPUT & INPUT BTN & ERROR
+==========================
+*/
+#query-input {
+  margin: 0 auto;
+  max-width: 1080px;
+  width: 50vw;
+  padding: 8px;
+  border: none;
+  box-shadow: $box-shadow;
+  color: $dark-grey;
+  &::placeholder {
+    color: $grey;
+  }
+}
+
+.query-btn {
+  border: none;
+  color: white;
+  background-color: $theme-green;
+  box-shadow: $box-shadow;
+  padding: 8px 16px;
+  font-weight: 600;
+}
+
+/*
+==========================
+MEDIA QUERY
+==========================
+*/
+
+@media (max-width: 550px) {
+  #query-input {
+    width: 60%;
+  }
+}
+
+@media (max-width: 340px) {
+  #query-input {
+    width: 100%;
+  }
+  .query-btn {
+    width: 100%;
+  }
+}

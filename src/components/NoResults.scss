@@ -19,3 +19,14 @@ NO RESULTS
     font-size: 22px;
   }
 }
+
+/*
+==========================
+MEDIA QUERY
+==========================
+*/
+@media (max-width: 550px) {
+  .no-results-card {
+    width: 100%;
+  }
+}
