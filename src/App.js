@@ -1,40 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './App.scss';
-
-export const BookCards = ({ volumeInfo }) => {
-  const { title, authors, imageLinks, infoLink, publisher } = volumeInfo;
-  let thumbnailImg = imageLinks ? imageLinks.thumbnail : require('./assets/book_placeholder.png');
-  let publisherText = publisher ? publisher : 'No publisher found';
-  let authorText = authors && authors.length === 1 ? authors[0] : 'No authors found';
-
-  return (
-    <div className='book-card--container'>
-      <img className='book-card--img' alt='book' src={thumbnailImg} />
-      <div className='book-card--info--container'>
-        <div className='book-card--info'>
-          <h2 className='book-card--title'>{title}</h2>
-          <h3 className='book-card--subtext'>{`By: ${authorText}`}</h3>
-          <h3 className='book-card--subtext'>{`Published By: ${publisherText}`}</h3>
-        </div>
-        <div className='book-card--btn'>
-          <a 
-            href={infoLink} 
-            target='_blank' 
-            rel="noopener noreferrer" 
-            className='book-card--link'
-          >
-            See this Book
-          </a>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-const NoResults = ({text}) => (
-  <div className='no-results-card'><i className='far fa-frown'/>{text}</div>
-)
+import RenderBookCards from './components/RenderBookCards';
+import NoResults from './components/NoResults';
 
 class App extends Component {
   constructor(props) {
@@ -103,12 +71,6 @@ class App extends Component {
     })
   }
 
-  renderCards = (resultsArray) => {
-    return resultsArray.map((volumeInfo,idx) => {
-      return <BookCards volumeInfo={volumeInfo.volumeInfo} key={idx} />
-    })
-  }
-
   render() {
     let { input, results, error, loading, noResultsText } = this.state;
     return (
@@ -135,7 +97,7 @@ class App extends Component {
           loading && <div id='loader'><i className='fas fa-spinner'></i></div>
         }
         <section className='book-results'>
-          {results.length > 0 && this.renderCards(results)}
+          {results.length > 0 && <RenderBookCards array={results} />}
           {results.length === 0 && !loading && <NoResults text={noResultsText} />}
         </section>
       </div>
