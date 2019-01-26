@@ -5,6 +5,7 @@ import RenderBookCards from './components/RenderBookCards';
 import NoResults from './components/NoResults';
 import Loader from './components/Loader';
 import Error from './components/Error';
+import Input from './components/Input';
 
 class App extends Component {
   constructor(props) {
@@ -12,7 +13,6 @@ class App extends Component {
     this.starterText = 'Nothing Here Yet - Try Searching For A Book!';
     this.nothingFoundText = 'Nothing Found! Try Another Query.';
     this.state = {
-      input: '',
       loading: false,
       error: false,
       results: [],
@@ -20,36 +20,21 @@ class App extends Component {
     }
   }
 
-  handleSubmitQuery = (e) => {
-    if (this.state.input !== '') {
+  handleSubmitQuery = (input) => {
+    if (input !== '') {
       this.setState({ loading: true, results: [] });
-      this.queryAPI(this.state.input);
+      this.queryAPI(input);
     } else {
       this.setState({ error: 'Please provide a search query first' })
     }
   }
 
-  handleUserInput = (e) => {
-    e.preventDefault();
-    let { value, name } = e.currentTarget;
-    if (value === '') {
-      this.clearApp();
-    } else {
-      this.setState({ [name]: value, error: false });
-    }
-  }
-
-  handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      this.handleSubmitQuery();
-    } 
-  }
-
   clearApp = () => {
-    this.setState({ input: '', error: false, results: [] });
+    this.setState({ error: false, results: [] });
   }
 
   queryAPI = (input) => {
+    console.log(input)
     return axios.get('https://www.googleapis.com/books/v1/volumes', {
       params: {
         key: 'AIzaSyCLJvxg85jgfaMwaORDzP9ECY83JCLXQtU',
@@ -74,26 +59,11 @@ class App extends Component {
   }
 
   render() {
-    let { input, results, error, loading, noResultsText } = this.state;
+    let { results, error, loading, noResultsText } = this.state;
     return (
       <div className="App">
         <h1 className='app-title'>Book Finder</h1>
-        <input 
-          id='query-input'
-          type='search' 
-          name='input' 
-          value={input} 
-          placeholder='Search by book title or author...'
-          onChange={(e) => {this.handleUserInput(e)}} 
-          onKeyDown={(e) => {this.handleKeyPress(e)}}
-        />
-        <button 
-          className='query-btn'
-          type='button'  
-          onClick={(e) => {this.handleSubmitQuery(e)}} 
-        >
-          Search
-        </button>
+        <Input onSubmit={this.handleSubmitQuery} clearApp={this.clearApp} />
         { error && <Error error={error} /> }
         { loading && <Loader /> }
         <section className='book-results'>
