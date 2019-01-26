@@ -7,8 +7,9 @@ const queryAPI = (input, successFn, errorFn) => {
       q: input,
       orderBy: 'relevance',
       maxResults: 20,
-      fields: 'totalItems,items(volumeInfo(title,authors,imageLinks/thumbnail,infoLink,publisher))' 
-    }
+      fields: 'totalItems,items(volumeInfo(title,authors,imageLinks/thumbnail,infoLink,publisher))',
+    },
+    timeout: 5000,
   })
   .then((res) => {
     let { data: { items, totalItems } } = res;
@@ -18,8 +19,13 @@ const queryAPI = (input, successFn, errorFn) => {
   })
   .catch((err) => {
     console.error(err);
-    let { message } = err.response.data.error;
-    errorFn(message);
+    if (err.code === 'ECONNABORTED') {
+      // timeout activated
+      errorFn('The search request took too long - please try again later.')
+    } else {
+      let { message } = err.response.data.error;
+      errorFn(message);
+    }
     return err;
   })
 }
