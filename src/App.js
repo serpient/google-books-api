@@ -21,8 +21,9 @@ class App extends Component {
   }
 
   handleSubmitQuery = (input) => {
+    this.setState({ results: [] });
     if (input !== '') {
-      this.setState({ loading: true, results: [] });
+      this.setState({ loading: true, error: false });
       return queryAPI(input, this.handleSuccess, this.handleError);
     } else {
       this.setState({ error: 'Please provide a search query first' })

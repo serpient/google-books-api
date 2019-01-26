@@ -32,24 +32,22 @@ describe('api calls', () => {
   beforeEach(() => { 
     renderedComponent = mount(<App />);
   })
+
   it('resets results before querying for new data', () => {
-    axios.get.mockResolvedValueOnce(mockResults);
     renderedComponent.setState({ results: mockItems });
-    renderedComponent.instance().handleSubmitQuery('test');
+    renderedComponent.instance().handleSubmitQuery('')
     expect(renderedComponent.state('results')).toEqual([])
   })
   
   it('with empty input, will not query for new data', () => {
-    axios.get.mockResolvedValueOnce(mockResults);
     renderedComponent.setState({ results: mockItems });
-    renderedComponent.instance().handleSubmitQuery('');
-    expect(renderedComponent.state('results')).toEqual(mockItems)
+    renderedComponent.instance().handleSubmitQuery('')
     expect(renderedComponent.state('error')).toEqual('Please provide a search query first')
   })
 
   it('saves results to state after making successful query', () => {
     axios.get.mockResolvedValueOnce(mockResults);
-    renderedComponent.instance().handleSubmitQuery('test').then(res => {
+    return renderedComponent.instance().handleSubmitQuery('test').then(res => {
       expect(res).toEqual(mockResults);
       expect(renderedComponent.state('results')).toEqual(mockResults.data.items);
       expect(renderedComponent.state('error')).toEqual(false);
@@ -58,12 +56,21 @@ describe('api calls', () => {
 
   it('sets error after failed query', () => {
     axios.get.mockRejectedValueOnce(mockError);
-    renderedComponent.instance().handleSubmitQuery('test')
+    return renderedComponent.instance().handleSubmitQuery('test')
       .catch(err => {
         expect(err).toEqual(mockError);
         expect(renderedComponent.state('results')).toEqual([]);
         expect(renderedComponent.state('error')).toEqual(mockError.response.data.error.message);
       })
+  })
+
+  it('resets error after new query', () => {
+    renderedComponent.setState({ error: 'test error' });
+    axios.get.mockResolvedValueOnce(mockResults);
+    return renderedComponent.instance().handleSubmitQuery('test').then(res => {
+      expect(res).toEqual(mockResults);
+      expect(renderedComponent.state('error')).toEqual(false);
+    });
   })
 
   it('renders no book cards when results not empty', () => {
