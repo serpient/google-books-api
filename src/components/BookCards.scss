@@ -1,0 +1,94 @@
+@import '../shared';
+
+/*
+==========================
+BOOK CARDS
+==========================
+*/
+.book-card--container {
+  background-color: white;
+  box-shadow: $box-shadow;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  padding: 20px;
+  margin-bottom: 50px;
+  grid-gap: 30px;
+}
+
+.book-card--img {
+  width: auto;
+  height: 250px;
+  object-fit: cover;
+  box-shadow: $box-shadow-grey;
+  position: relative;
+  margin-top: -50px;
+  max-width: 175px;
+}
+
+.book-card--info--container {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 3fr 1fr;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+.book-card--title {
+  color: $dark-grey;
+  font-size: 24px;
+  margin: 5px 0px;
+}
+
+.book-card--subtext {
+  color: $grey;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 5px 0px;
+}
+.book-card--btn {
+  align-content: end;
+  margin-top: 20px;
+}
+
+.book-card--link {
+  padding: 8px 36px;
+  background-color: $theme-green;
+  color: white;
+  font-weight: 600;
+  border-radius: 10px;
+  text-align: center;
+  text-decoration: none;
+}
+
+/*
+==========================
+MEDIA QUERY
+==========================
+*/
+@media (max-width: 550px) {
+  .book-card--container {
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 20px;
+  }
+  .book-card--img {
+    max-width: 166px;
+  }
+}
+
+@media (max-width: 450px) {
+  .book-card--container {
+    grid-template-columns: 1fr;
+    width: 85%;
+    justify-items: center; 
+  }
+  .book-card--info--container {
+    grid-template-rows: 1fr;
+    text-align: left;
+  }
+  .book-card--link  {
+    display: block;
+    text-align: center;
+  }
+}
